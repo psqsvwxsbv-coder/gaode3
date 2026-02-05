@@ -4,25 +4,25 @@
     {
       "src": "app.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "/static/**",
-      "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/app.py"
+      "source": "/static/(.*)",
+      "destination": "/static/$1"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "source": "/(.*\\.(css|js|png|jpg|jpeg|gif|ico|svg))",
+      "destination": "/static/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/app.py"
     }
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
