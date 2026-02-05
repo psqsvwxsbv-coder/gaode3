@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地理坐标转换工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-map-marker-alt"></i> 地理坐标转换工具</h1>
+            <p class="subtitle">将中文地址转换为GCJ-02和WGS-84坐标系坐标</p>
+        </header>
+
+        <div class="main-content">
+            <div class="card">
+                <h2><i class="fas fa-cog"></i> 基本设置</h2>
+                <div class="form-group">
+                    <label for="api_key">高德地图API Key:</label>
+                    <div class="input-with-help">
+                        <input type="text" id="api_key" placeholder="请输入高德地图API密钥" value="">
+                        <div class="help-tip">
+                            <i class="fas fa-question-circle"></i>
+                            <div class="help-text">
+                                <p>需要申请高德地图Web服务API Key</p>
+                                <a href="https://lbs.amap.com/api/webservice/guide/create-project/get-key" target="_blank">如何获取？</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                        <h2><i class="fas fa-search-location"></i> 单个地址查询</h2>
+                        <div class="form-group">
+                            <label for="address">地址:</label>
+                            <input type="text" id="address" placeholder="例如：上海市杨浦区四平路1239号">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">城市（可选）:</label>
+                            <input type="text" id="city" placeholder="例如：上海">
+                        </div>
+                        <button id="geocode-btn" class="btn-primary">
+                            <i class="fas fa-search"></i> 查询坐标
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h2><i class="fas fa-list"></i> 批量处理</h2>
+                        <div class="form-group">
+                            <label for="batch_addresses">地址列表（每行一个地址）:</label>
+                            <textarea id="batch_addresses" rows="8" placeholder="北京市海淀区中关村
+上海市浦东新区陆家嘴
+广州市天河区珠江新城"></textarea>
+                        </div>
+                        <button id="batch-btn" class="btn-secondary">
+                            <i class="fas fa-bolt"></i> 批量转换
+                        </button>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                        <h2><i class="fas fa-map"></i> 查询结果</h2>
+                        <div id="result" class="result-container">
+                            <div class="result-placeholder">
+                                <i class="fas fa-map-marked-alt fa-3x"></i>
+                                <p>查询结果将显示在这里</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="batch-result" class="card" style="display: none;">
+                <h2><i class="fas fa-table"></i> 批量处理结果</h2>
+                <div class="table-container">
+                    <table id="batch-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>地址</th>
+                                <th>GCJ-02坐标</th>
+                                <th>WGS-84坐标</th>
+                                <th>格式化地址</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 结果将动态插入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="action-buttons">
+                    <button id="export-csv" class="btn-secondary">
+                        <i class="fas fa-file-csv"></i> 导出CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle"></i> 坐标系说明</h3>
+                <div class="coordinate-info">
+                    <div class="coord-type">
+                        <h4>GCJ-02</h4>
+                        <p>中国国家测绘局制定的坐标系，用于高德地图、腾讯地图等</p>
+                    </div>
+                    <div class="coord-type">
+                        <h4>WGS-84</h4>
+                        <p>国际通用的GPS坐标系，用于Google地图、苹果地图等</p>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">© 2026 地理坐标转换工具 | 使用高德地图API服务</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
